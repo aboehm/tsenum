@@ -27,27 +27,30 @@ def enumerate_times(cur_time, offset, count, step, patern):
 	cur = cur_time
 	r = []
 
+	l_count = (count < 0)*count
+	h_count = (count >= 0)*count
+
 	if step == None or type(step) != str:
 		return []
 
 	elif step.lower() == "day":
-		for i in range(0, count):
-			t = cur-timedelta(days=(i+offset))
+		for i in range(l_count, h_count):
+			t = cur+timedelta(days=(i+offset))
 			r += [t.strftime(patern)]
 
 	elif step.lower() == "week":
-		for i in range(0, count):
-			t = cur-timedelta(weeks=(i+offset))
+		for i in range(l_count, h_count):
+			t = cur+timedelta(weeks=(i+offset))
 			r += [t.strftime(patern)]
 
 	elif step.lower() == "hour":
-		for i in range(0, count):
-			t = cur-timedelta(hours=(i+offset))
+		for i in range(l_count, h_count):
+			t = cur+timedelta(hours=(i+offset))
 			r += [t.strftime(patern)]
 
 	elif step.lower() == "minute":
-		for i in range(0, count):
-			t = cur-timedelta(minutes=(i+offset))
+		for i in range(l_count, h_count):
+			t = cur+timedelta(minutes=(i+offset))
 			r += [t.strftime(patern)]
 	else:
 		return []
