@@ -59,11 +59,13 @@ def enumerate_times(cur_time, offset, count, step, patern):
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(
+		prog="tsenum",
 		description="Enumerate timestamps from now with offset in different units.",
+		epilog="tsenum, Copyright (C) 2016 Alexander Böhm <alxndr.boehm@gmail.com> Licensed under GPLv2. See source distribution for detailedcopyright notices.",
 	)
 
 	parser.add_argument(
-		'--utc', '-u',
+		'-u', '--utc',
 		help="Current time is in UTC",
 		dest="utc",
 		action="store_true",
@@ -71,7 +73,7 @@ if __name__ == "__main__":
 	)
 
 	parser.add_argument(
-		'--offset', '-o',
+		'-o', '--offset',
 		help="Offset to enumerate from",
 		dest="offset",
 		type=int,
@@ -79,7 +81,7 @@ if __name__ == "__main__":
 	)
 
 	parser.add_argument(
-		'--count', '-c',
+		'-c', '--count',
 		help="Count to enumerate",
 		dest="count",
 		type=int,
@@ -87,7 +89,7 @@ if __name__ == "__main__":
 	)
 
 	parser.add_argument(
-		'--step', '-s',
+		'-s', '--step',
 		help="Step width",
 		dest="step",
 		choices=["day", "week", "hour", "minute"],
@@ -96,12 +98,16 @@ if __name__ == "__main__":
 	)
 
 	parser.add_argument(
-		'--pattern', '-p',
+		'-p', '--pattern',
 		help="Date pattern to use (see Python's strftime in datetime)",
 		dest="pattern",
 		type=str,
 		required=True,
 	)
+
+	if len(sys.argv) == 1:
+		parser.print_help()
+		sys.exit(1)
 
 	args = parser.parse_args()
 
