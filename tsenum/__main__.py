@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 # vim: noet tabstop=4 shiftwidth=4
 #
@@ -19,8 +18,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
-import sys, argparse
+import argparse, sys, tsenum
 from datetime import datetime, timedelta
 
 def enumerate_times(cur_time, offset, count, step, patern):
@@ -59,9 +57,9 @@ def enumerate_times(cur_time, offset, count, step, patern):
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(
-		prog="tsenum",
-		description="Enumerate timestamps from now with offset in different units.",
-		epilog="tsenum, Copyright (C) 2016 Alexander Böhm <alxndr.boehm@gmail.com> Licensed under GPLv2. See source distribution for detailedcopyright notices.",
+		prog=tsenum.prog,
+		description=tsenum.description,
+		epilog=tsenum.epilog,
 	)
 
 	parser.add_argument(
@@ -117,6 +115,6 @@ if __name__ == "__main__":
 		now = datetime.now()
 
 	for i in enumerate_times(now, args.offset, args.count, args.step, args.pattern):
-		print i
+		print(i)
 	
 	sys.exit(0)
