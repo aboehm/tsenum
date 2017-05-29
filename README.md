@@ -23,13 +23,23 @@ optional arguments:
                         Date pattern to use (see Python's strftime in
                         datetime)
 ```
-
-## example
+## Usage (Module)
 
 Count 7 days back from yesterday.
 
 ```
-tsenum.py --offset -1 --count -7 --step day --pattern "%Y-%m-%d: Hello world!"
+from tsenum import enumerate_times
+from datetime import datetime
+
+enumerate_times(datetime.now(), -1, -7, 'day', '%Y-%m-%d')
+```
+
+## Usage (CLI)
+
+Count 7 days back from yesterday.
+
+```
+tsenum --offset -1 --count -7 --step day --pattern "%Y-%m-%d: Hello world!"
 2016-05-27: Hello world!
 2016-05-28: Hello world!
 2016-05-29: Hello world!
@@ -42,7 +52,7 @@ tsenum.py --offset -1 --count -7 --step day --pattern "%Y-%m-%d: Hello world!"
 Count 3 weeks into future starting from now.
 
 ```
-tsenum.py --offset 0 --count 3 --step day --pattern "Week %V"
+tsenum --offset 0 --count 3 --step day --pattern "Week %V"
 Week 22
 Week 22
 Week 23

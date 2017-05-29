@@ -1,45 +1,55 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages
-import tsenum, os, sys
+import pkutils
+try:
+    from setuptools import setup, find_packages
+except ImportError:
+    from distutils.core import setup
 
-readme_file = os.path.join(os.path.dirname(__file__), "README.md")
-long_description = open(readme_file, "r").read(4096)
+import tsenum
+
+requirements = list(pkutils.parse_requirements('requirements.txt'))
+dependencies = list(pkutils.parse_requirements('requirements.txt', True))
+readme = pkutils.read('README.md')
+module = pkutils.parse_module('tsenum/__init__.py')
+version = module.__version__
+project = module.__title__
+user = 'aboehm'
 
 setup(
-	name=tsenum.prog,
-	version=tsenum.version,
-	description=tsenum.description,
-	long_description=long_description,
-	license=tsenum.license,
-	url=tsenum.url,
-	
-	author=tsenum.author,
-	author_email=tsenum.author_mail,
-
-	classifiers = [
-		'Development Status :: 5 - Production/Stable',
-
-		'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-
-		'Programming Language :: Python :: 2',
-		'Programming Language :: Python :: 3',
-
-		'Operating System :: Unix',
-		'Operating System :: POSIX :: Linux',
-		'Operating System :: Microsoft',
-
-		'Topic :: Utilities',
+  name=project,
+  version=version,
+  description=module.__description__,
+  long_description=readme,
+  author=module.__author__,
+  author_email=module.__email__,
+  install_requires=requirements,
+  dependency_links=dependencies,
+  setup_requires=['pkutils'],
+  url=pkutils.get_url(project, user),
+  download_url=pkutils.get_dl_url(project, user, version),
+  classifiers=[
+        pkutils.get_status(version),
+				'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+				'Programming Language :: Python :: 2',
+				'Programming Language :: Python :: 3',
+				'Topic :: Utilities',
+				'Operating System :: Unix',
+				'Operating System :: POSIX',
+				'Operating System :: POSIX :: Linux',
+				'Operating System :: Microsoft',
   ],
-
 	packages=find_packages(),
-
+	platforms=[
+		'MacOS X',
+		'Linux',
+		'Windows',
+	],
 	entry_points = {
 		'console_scripts': [
-			'eggsecutable = tsenum.main_func',
+			'tsenum=tsenum.__main__:main',
 		],
 	},
-
 	keywords="utils timestamp",
 )
 
