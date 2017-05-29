@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-import tsenum, sys
+import tsenum, os, sys
 
-readme_file = os.path.join(os.path.dirname(__file__), fname)
+readme_file = os.path.join(os.path.dirname(__file__), "README.md")
 long_description = open(readme_file, "r").read(4096)
 
 setup(
