@@ -1,6 +1,6 @@
 # tsenum
 
-Generate timestamps.
+A timestamp generator.
 
 ## commands
 

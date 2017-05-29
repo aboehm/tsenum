@@ -20,7 +20,10 @@
 
 version     = '0.1'
 prog        = 'tsenum'
-author      = 'Alexander Böhm <alxndr.boehm@gmail.com>'
+author      = 'Alexander Böhm'
+author_mail = 'alxndr.boehm@gmail.com'
+license		= 'GPLv2+'
 description = 'Enumerate timestamps from now with offset in different units.'
-epilog      = 'tsenum v%s, Copyright (C) 2016 %s Licensed under GPLv2. See source distribution for detailed copyright notices.' % (version, author)
+epilog      = 'tsenum v%s, Copyright (C) 2016 %s <%s> Licensed under %s. See source distribution for detailed copyright notices.' % (version, author, author_mail, license)
+url			= 'https://github.com/aboehm/tsenum' 
 
