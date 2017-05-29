@@ -21,45 +21,11 @@
 import argparse, sys, tsenum
 from datetime import datetime, timedelta
 
-def enumerate_times(cur_time, offset, count, step, patern):
-	cur = cur_time
-	r = []
-
-	l_count = (count < 0)*count
-	h_count = (count >= 0)*count
-
-	if step == None or type(step) != str:
-		return []
-
-	elif step.lower() == "day":
-		for i in range(l_count, h_count):
-			t = cur+timedelta(days=(i+offset))
-			r += [t.strftime(patern)]
-
-	elif step.lower() == "week":
-		for i in range(l_count, h_count):
-			t = cur+timedelta(weeks=(i+offset))
-			r += [t.strftime(patern)]
-
-	elif step.lower() == "hour":
-		for i in range(l_count, h_count):
-			t = cur+timedelta(hours=(i+offset))
-			r += [t.strftime(patern)]
-
-	elif step.lower() == "minute":
-		for i in range(l_count, h_count):
-			t = cur+timedelta(minutes=(i+offset))
-			r += [t.strftime(patern)]
-	else:
-		return []
-
-	return r
-
-if __name__ == "__main__":
+def main():
 	parser = argparse.ArgumentParser(
-		prog=tsenum.prog,
-		description=tsenum.description,
-		epilog=tsenum.epilog,
+		prog=tsenum.__title__,
+		description=tsenum.__description__,
+		epilog=tsenum.__epilog__,
 	)
 
 	parser.add_argument(
@@ -114,7 +80,10 @@ if __name__ == "__main__":
 	else:
 		now = datetime.now()
 
-	for i in enumerate_times(now, args.offset, args.count, args.step, args.pattern):
+	for i in tsenum.enumerate_times(now, args.offset, args.count, args.step, args.pattern):
 		print(i)
 	
 	sys.exit(0)
+
+if __name__ == "__main__":
+	main()
