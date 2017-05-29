@@ -3,7 +3,8 @@
 from setuptools import setup, find_packages
 import tsenum, sys
 
-long_description=open("README.md", "r").read(4096)
+readme_file = os.path.join(os.path.dirname(__file__), fname)
+long_description = open(readme_file, "r").read(4096)
 
 setup(
 	name=tsenum.prog,
