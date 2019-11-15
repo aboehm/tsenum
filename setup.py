@@ -17,6 +17,7 @@ setup(
   version=version,
   description=module.__description__,
   long_description=readme,
+	long_description_content_type='text/markdown',
   author=module.__author__,
   author_email=module.__email__,
   install_requires=requirements,
