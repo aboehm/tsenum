@@ -1,8 +1,8 @@
 from . import enumerate_times
-from datetime import datetime
+from datetime import datetime, timezone
 from . import *
 
-testdate = datetime(year=1970, month=1, day=10, hour=1, minute=20, second=33).astimezone()
+testdate = datetime(year=1970, month=1, day=10, hour=1, minute=20, second=33).astimezone(timezone.utc)
 
 # test formating
 
