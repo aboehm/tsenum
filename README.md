@@ -4,7 +4,22 @@
 
 A timestamp generator.
 
-## commands
+## Install
+
+You can use pip to install from the repository
+
+```
+pip install tsenum
+```
+
+or download sources and run pip from this directry
+
+```
+git clone https://github.com/aboehm/tsenum
+pip install .
+```
+
+## Commands
 
 ```
 usage: tsenum.py [-h] [--utc] --offset OFFSET --count COUNT --step
@@ -29,11 +44,11 @@ optional arguments:
 
 Count 7 days back from yesterday.
 
-```
-from tsenum import enumerate_times
+```python
+import tsenum
 from datetime import datetime
 
-enumerate_times(datetime.now(), -1, -7, 'day', '%Y-%m-%d')
+tsenum.enumerate_times(datetime.now(), -1, -7, tsenum.STEP_DAY, '%Y-%m-%d')
 ```
 
 ## Usage (CLI)
