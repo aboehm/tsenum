@@ -1,5 +1,7 @@
 # tsenum
 
+[![Build Status](https://travis-ci.org/aboehm/tsenum.svg?branch=master)](https://travis-ci.org/aboehm/tsenum)
+
 A timestamp generator.
 
 ## commands
