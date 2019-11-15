@@ -12,7 +12,7 @@ You can use pip to install from the repository
 pip install tsenum
 ```
 
-or download sources and run pip from this directry
+or download sources and run pip from this directory
 
 ```
 git clone https://github.com/aboehm/tsenum
