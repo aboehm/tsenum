@@ -1,31 +1,16 @@
 # -*- coding: UTF-8 -*-
 # vim: noet tabstop=4 shiftwidth=4
-#
-# Timestamp enumerator 
-# Copyright (C) 2016 Alexander Böhm <alxndr.boehm@gmail.com>
-# 
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import argparse, sys, tsenum
-from datetime import datetime, timedelta
+import argparse
+import sys
+import tsenum
+from datetime import datetime, timedelta, timezone
 
 def main():
 	parser = argparse.ArgumentParser(
-		prog=tsenum.__title__,
-		description=tsenum.__description__,
-		epilog=tsenum.__epilog__,
+		prog='tsenum',
+		description=tsenum.__doc__,
+		epilog='tsenum v%s, Copyright (C) 2019 %s <%s> Licensed under %s. See source distribution for detailed copyright notices.' % (tsenum.__version__, tsenum.__author__, tsenum.__email__, tsenum.__license__)
 	)
 
 	parser.add_argument(
@@ -56,7 +41,13 @@ def main():
 		'-s', '--step',
 		help="Step width",
 		dest="step",
-		choices=["day", "week", "hour", "minute"],
+		choices=[
+			tsenum.STEP_WEEK,
+			tsenum.STEP_DAY,
+			tsenum.STEP_HOUR,
+			tsenum.STEP_MINUTE,
+			tsenum.STEP_SECOND,
+		],
 		type=str,
 		required=True,
 	)
@@ -78,7 +69,7 @@ def main():
 	if args.utc:
 		now = datetime.utcnow()
 	else:
-		now = datetime.now()
+		now = datetime.now().astimezone()
 
 	for i in tsenum.enumerate_times(now, args.offset, args.count, args.step, args.pattern):
 		print(i)

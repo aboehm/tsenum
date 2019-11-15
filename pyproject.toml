@@ -1,0 +1,2 @@
+[build-system]
+requires = ["pkutils", "setuptools", "pytest", "pytest-runner"]
