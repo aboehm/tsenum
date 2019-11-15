@@ -1,2 +1,0 @@
-pkutils>=0.13.6
-setuptools>=33.1.1
