@@ -1,6 +1,6 @@
 # tsenum
 
-[![Build Status](https://travis-ci.org/aboehm/tsenum.svg?branch=master)](https://travis-ci.org/aboehm/tsenum)
+![Build Status](https://github.com/aboehm/tsenum/actions/workflows/tests.yml/badge.svg) 
 
 A timestamp generator.
 
