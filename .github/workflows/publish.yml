@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    container: "docker.io/library/python:latest"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install hatch
+        run: pip install hatch
+
+      - name: Build
+        run: hatch build
+
+      - name: Get version nubmer
+        id: vars
+        run: echo "version=$(hatch version)" >> $GITHUB_OUTPUT
+
+      - name: Archive wheel
+        uses: actions/upload-artifact@v3
+        with:
+          name: "tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
+          path: "dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
+
+      - name: Publish
+        run: hatch publish --no-prompt
