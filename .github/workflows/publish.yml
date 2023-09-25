@@ -2,8 +2,8 @@ name: Publish
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - "main"
 
 jobs:
   publish:
@@ -23,11 +23,26 @@ jobs:
         id: vars
         run: echo "version=$(hatch version)" >> $GITHUB_OUTPUT
 
-      - name: Archive wheel
-        uses: actions/upload-artifact@v3
+      - name: Create release on GitHub
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          name: "tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
-          path: "dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
+          tag_name: "v${{ steps.vars.outputs.version }}"
+          release_name: "Release v${{ steps.vars.outputs.version }}"
+          draft: false
+          prerelease: false
+
+      - name: Append wheel on release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          upload_url: "${{ jobs.create_release.outputs.upload_url }}"
+          asset_name: "tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
+          asset_path: "dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
+          asset_content_type: application/zip
 
       - name: Publish
         run: hatch publish --no-prompt
