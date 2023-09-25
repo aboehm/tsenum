@@ -1,6 +1,6 @@
 # tsenum
 
-![Build Status](https://github.com/aboehm/tsenum/actions/workflows/tests.yml/badge.svg) 
+[![Tests](https://github.com/aboehm/tsenum/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/aboehm/tsenum/actions/workflows/tests.yml)
 
 A timestamp generator.
 
