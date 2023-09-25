@@ -21,4 +21,5 @@ jobs:
 
       - name: Run tests
         run: |
+          pip install hatch
           hatch run dev:test
