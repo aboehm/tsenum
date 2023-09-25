@@ -141,6 +141,11 @@ ban-relative-imports = "all"
 # Tests can use magic values, assertions, and relative imports
 "tests/**/*" = ["PLR2004", "S101", "TID252"]
 
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
 [tool.coverage.run]
 source_pkgs = ["tsenum", "tests"]
 branch = true
