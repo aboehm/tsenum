@@ -1,12 +1,12 @@
 name: Publish
 
-on: [push]
-#  push:
-#    tags:
-#      - v*
+on:
+  push:
+    tags:
+      - v*
 
 jobs:
-  test:
+  publish:
     runs-on: ubuntu-latest
     container: "docker.io/library/python:latest"
     steps:
@@ -14,12 +14,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install hatch
-        run: |
-          pip install hatch
+        run: pip install hatch
 
       - name: Build
-        run: |
-          hatch build
+        run: hatch build
 
       - name: Get version nubmer
         id: vars
@@ -32,5 +30,4 @@ jobs:
           path: "dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
 
       - name: Publish
-        run: |
-          #hatch publish --no-prompt
+        run: hatch publish --no-prompt
