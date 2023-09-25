@@ -19,7 +19,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run tests
+      - name: Install hatch
         run: |
           pip install hatch
+
+      - name: Run checks
+        run: |
+          hatch run dev:style tsenum
+
+      - name: Run tests
+        run: |
           hatch run dev:test
+
+      - name: Build
+        run: |
+          hatch build
