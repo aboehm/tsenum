@@ -27,9 +27,6 @@ jobs:
       - name: Install hatch
         run: pip install hatch
 
-      - name: Build
-        run: hatch build
-
       - name: Get version nubmer
         id: vars
         run: echo "version=$(hatch version)" >> $GITHUB_OUTPUT
@@ -40,20 +37,10 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          tag_name: "v${{ steps.vars.outputs.version }}"
+          tag_name: "${{ steps.vars.outputs.version }}"
           release_name: "Release v${{ steps.vars.outputs.version }}"
           draft: false
           prerelease: false
-
-      - name: Append wheel on release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        with:
-          upload_url: "${{ steps.create_release.outputs.upload_url }}"
-          asset_name: "tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
-          asset_path: "dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
-          asset_content_type: application/zip
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
