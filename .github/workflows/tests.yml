@@ -2,8 +2,8 @@ name: Tests
 
 on:
   push:
-    tags-ignore:
-      - "**" 
+    tags:
+      - "!**" 
 
 jobs:
   test:
