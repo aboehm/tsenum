@@ -27,20 +27,22 @@ jobs:
       - name: Install hatch
         run: pip install hatch
 
+      - name: Build
+        run: hatch build
+
       - name: Get version nubmer
         id: vars
         run: echo "version=$(hatch version)" >> $GITHUB_OUTPUT
 
       - name: Create release on GitHub
-        uses: actions/create-release@v1
-        id: create_release
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: "${{ steps.vars.outputs.version }}"
-          release_name: "Release v${{ steps.vars.outputs.version }}"
+          name: "Release v${{ steps.vars.outputs.version }}"
           draft: false
           prerelease: false
+          files: |
+            dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
