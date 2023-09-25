@@ -29,6 +29,12 @@ jobs:
       - name: Install hatch
         run: pip install hatch
 
+      - name: Run checks
+        run: hatch run dev:style .
+
+      - name: Run tests
+        run: hatch run dev:test
+
       - name: Build
         run: hatch build
 
@@ -41,6 +47,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          body: ""
           tag_name: "${{ steps.vars.outputs.version }}"
           name: "Release v${{ steps.vars.outputs.version }}"
           draft: false
