@@ -9,6 +9,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     container: "docker.io/library/python:latest"
+    environment:
+      name: release
+      url: https://pypi.org/p/tsenum
+    permissions:
+      # IMPORTANT: required for trusted publishing
+      # See https://github.com/marketplace/actions/pypi-publish#usage
+      id-token: write  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -44,5 +51,5 @@ jobs:
           asset_path: "dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl"
           asset_content_type: application/zip
 
-      - name: Publish
-        run: hatch publish --no-prompt
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
