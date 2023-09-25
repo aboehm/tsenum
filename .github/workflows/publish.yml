@@ -14,9 +14,9 @@ jobs:
     permissions:
       # IMPORTANT: required for trusted publishing
       # See https://github.com/marketplace/actions/pypi-publish#usage
-      id-token: write  
-      # Fix for create release
-      permissions: write-all
+      id-token: write
+      # Needed for create release
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
