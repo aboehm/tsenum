@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: expandtab tabstop=4 shiftwidth=4
 
-__version__ = "1.1.1"
+__version__ = "1.2.0"
 __author__ = "Alexander Böhm"
 __email__ = "alexander.boehm@malbolge.net"
 __license__ = "GPLv2+"
