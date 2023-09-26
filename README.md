@@ -48,10 +48,10 @@ import tsenum
 
 print(
     tsenum.enumerate_times(
-        datetime.now(),
+        datetime.now().astimezone(),
         offset=-1,
         count=-7,
-        step_width=tsenum.STEP_DAY,
+        step=tsenum.Step.DAY,
         pattern='%Y-%m-%d'
     )
 )
