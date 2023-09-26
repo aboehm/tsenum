@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# vim: noet tabstop=4 shiftwidth=4
+# vim: expandtab tabstop=4 shiftwidth=4
 
 import argparse
 import sys
@@ -30,10 +30,10 @@ def main():
     parser.add_argument(
         "-o",
         "--offset",
-        help="Offset to enumerate from",
+        help="Offset to enumerate from (default 0)",
         dest="offset",
         type=int,
-        required=True,
+        default=0,
     )
 
     parser.add_argument(
@@ -51,11 +51,12 @@ def main():
         help="Step width",
         dest="step",
         choices=[
-            tsenum.STEP_WEEK,
-            tsenum.STEP_DAY,
-            tsenum.STEP_HOUR,
-            tsenum.STEP_MINUTE,
-            tsenum.STEP_SECOND,
+            tsenum.Step.DAY.value,
+            tsenum.Step.HOUR.value,
+            tsenum.Step.MINUTE.value,
+            tsenum.Step.SECOND.value,
+            tsenum.Step.WEEK.value,
+            tsenum.Step.YEAR.value,
         ],
         type=str,
         required=True,
@@ -80,5 +81,5 @@ def main():
     else:
         now = datetime.now().astimezone()
 
-    for i in tsenum.enumerate_times(now, args.offset, args.count, args.step, args.pattern):
+    for i in tsenum.enumerate_times(now, args.offset, args.count, tsenum.Step(args.step), args.pattern):
         print(i)
