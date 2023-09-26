@@ -2,8 +2,8 @@ name: Publish
 
 on:
   push:
-    branches:
-      - "main"
+    tags:
+      - "**"
 
 jobs:
   release:
@@ -39,8 +39,13 @@ jobs:
         run: hatch build
 
       - name: Get version nubmer
-        id: vars
-        run: echo "version=$(hatch version)" >> $GITHUB_OUTPUT
+        run: |
+          APP_VERSION=$(hatch version)
+          if [ "${{ github.ref_name }}" != "${APP_VERSION}" ] ; then
+            echo "Tag name differs from ${APP_VERSION}."
+            echo "Adapt the version in tsenum/__init__.py or use the correct tag for the version!"
+            exit 1
+          fi
 
       - name: Create release on GitHub
         uses: softprops/action-gh-release@v1
@@ -48,12 +53,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body: ""
-          tag_name: "${{ steps.vars.outputs.version }}"
-          name: "Release v${{ steps.vars.outputs.version }}"
+          tag_name: "${{ github.ref_name }}"
+          name: "Release v${{ github.ref_name }}"
           draft: false
           prerelease: false
           files: |
-            dist/tsenum-${{ steps.vars.outputs.version }}-py3-none-any.whl
+            dist/tsenum-${{ github.ref_name }}-py3-none-any.whl
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1

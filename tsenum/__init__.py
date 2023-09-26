@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# vim: noet tabstop=4 shiftwidth=4
+# vim: expandtab tabstop=4 shiftwidth=4
 
 __version__ = "1.1.1"
 __author__ = "Alexander Böhm"
@@ -7,66 +7,73 @@ __email__ = "alexander.boehm@malbolge.net"
 __license__ = "GPLv2+"
 
 from datetime import datetime, timedelta
-
-STEP_WEEK = "week"
-STEP_DAY = "day"
-STEP_HOUR = "hour"
-STEP_MINUTE = "minute"
-STEP_SECOND = "second"
+from enum import Enum
+from typing import List
 
 
-def enumerate_times(cur_time: datetime, offset: int, count: int, step: str, pattern: str) -> list:
+class Step(Enum):
+    DAY = "day"
+    HOUR = "hour"
+    MINUTE = "minute"
+    SECOND = "second"
+    WEEK = "week"
+    YEAR = "year"
+
+
+def enumerate_times(cur_time: datetime, offset: int, count: int, step: Step, pattern: str) -> List[str]:
     """
     Count a number of timestamps from a specific time at a given offset. Timestamps
     are formated with strftime.
 
     Parameters:
-            cur_time (datetime): Reference time
+        cur_time (datetime): Reference time
 
-            offset (int): Offset added/subtracted in given unit from refrence time
+        offset (int): Offset added/subtracted in given unit from refrence time
 
-            count (int): Timestamps to count in given unit
+        count (int): Timestamps to count in given unit. Positive and negative integers are possible.
 
-            step (str): Step size counting in. Allow values are
-                                    - STEP_WEEK
-                                    - STEP_DAY
-                                    - STEP_HOUR
-                                    - STEP_MINUTE
-                                    - STEP_SECOND
+        step (Step): Step size counting in.
 
-            pattern (str): Timestamp pattern in strftime format
+        pattern (str): Timestamp pattern in strftime format
 
-    Returns
-            list: A list of enumarted timestamps as strings
+    Returns:
+        A list of strings of the pattern.
     """
 
-    cur = cur_time
-    r = []
-    l_count = (count < 0) * count
-    h_count = (count >= 0) * count
+    if step == Step.DAY:
 
-    if step == STEP_WEEK:
-        for i in range(l_count, h_count):
-            t = cur + timedelta(weeks=(i + offset))
-            r += [t.strftime(pattern)]
-    elif step == STEP_DAY:
-        for i in range(l_count, h_count):
-            t = cur + timedelta(days=(i + offset))
-            r += [t.strftime(pattern)]
-    elif step == STEP_HOUR:
-        for i in range(l_count, h_count):
-            t = cur + timedelta(hours=(i + offset))
-            r += [t.strftime(pattern)]
-    elif step == STEP_MINUTE:
-        for i in range(l_count, h_count):
-            t = cur + timedelta(minutes=(i + offset))
-            r += [t.strftime(pattern)]
-    elif step == STEP_SECOND:
-        for i in range(l_count, h_count):
-            t = cur + timedelta(seconds=(i + offset))
-            r += [t.strftime(pattern)]
+        def step_func(step, offset):
+            return timedelta(days=(step + offset))
+
+    elif step == Step.HOUR:
+
+        def step_func(step, offset):
+            return timedelta(hours=(step + offset))
+
+    elif step == Step.MINUTE:
+
+        def step_func(step, offset):
+            return timedelta(minutes=(step + offset))
+
+    elif step == Step.SECOND:
+
+        def step_func(step, offset):
+            return timedelta(seconds=(step + offset))
+
+    elif step == Step.WEEK:
+
+        def step_func(step, offset):
+            return timedelta(weeks=(step + offset))
+
+    elif step == Step.YEAR:
+
+        def step_func(step, offset):
+            return timedelta(years=(step + offset))
+
     else:
         msg = f"Stepsize `{step}` is not defined"
         raise ValueError(msg)
 
-    return r
+    l_count = (count < 0) * count
+    h_count = (count >= 0) * count
+    return [(cur_time + step_func(i, offset)).strftime(pattern) for i in range(l_count, h_count)]

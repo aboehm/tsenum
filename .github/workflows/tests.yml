@@ -2,10 +2,8 @@ name: Tests
 
 on:
   push:
-    branches-ignore:
-      - "main"
-    tags:
-      - "!**" 
+    branches:
+      - "*"
 
 jobs:
   test:
